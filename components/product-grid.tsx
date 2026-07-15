@@ -77,7 +77,6 @@ export function ProductGrid({ products, dict }: { products: Product[]; dict: Rec
   const published = products.filter((product) => product.published);
   const categories = [dict.all, ...Array.from(new Set(published.map((product) => product.category)))];
   const [category, setCategory] = useState(dict.all);
-  const [favorites, setFavorites] = useState<string[]>([]);
   const visible = useMemo(() => category === dict.all ? published : published.filter((product) => product.category === category), [category, published, dict.all]);
 
   return (
@@ -105,7 +104,6 @@ export function ProductGrid({ products, dict }: { products: Product[]; dict: Rec
                   {product.hoverImage && <Image src={product.hoverImage} alt="" fill className="object-cover opacity-0 transition duration-700 group-hover:scale-[1.025] group-hover:opacity-100" sizes="25vw" />}
                   <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/45 to-transparent opacity-0 transition duration-500 group-hover:opacity-100" />
                   {product.label && <span className="absolute left-4 top-4 z-20 rounded-full bg-white/88 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[.16em] backdrop-blur">{product.label}</span>}
-                  <button type="button" onClick={(event) => { event.stopPropagation(); setFavorites((items) => items.includes(product.id) ? items.filter((id) => id !== product.id) : [...items, product.id]); }} className="absolute right-4 top-4 z-20 grid size-10 place-items-center rounded-full bg-white/88 backdrop-blur transition hover:scale-105" aria-label="Add to favorites"><Heart className={cn("size-4", favorites.includes(product.id) && "fill-black")} /></button>
                   <div className="absolute bottom-4 left-4 right-4 z-20 flex translate-y-4 items-center justify-between rounded-full bg-white/92 px-5 py-3 text-sm font-semibold opacity-0 backdrop-blur transition duration-500 group-hover:translate-y-0 group-hover:opacity-100">{dict.quick_view} <ArrowUpRight className="size-4" /></div>
                 </div>
                 <div className="mt-5 flex items-start justify-between gap-4">
