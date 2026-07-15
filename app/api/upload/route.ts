@@ -27,7 +27,8 @@ export async function POST(request: Request) {
   try {
     const blob = await put(filename, file, { access: 'public' });
     return NextResponse.json({ url: blob.url });
-  } catch (error) {
-    return NextResponse.json({ error: "Cloud upload failed. Have you configured Vercel Blob?" }, { status: 500 });
+  } catch (error: any) {
+    console.error("Blob upload error:", error);
+    return NextResponse.json({ error: `Upload failed: ${error.message || "Unknown error"}` }, { status: 500 });
   }
 }
