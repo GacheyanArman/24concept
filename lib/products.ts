@@ -102,7 +102,7 @@ export function validateProductInput(body: unknown):
   const label = asText(source.label, 30);
   const instagramUrl = asText(source.instagramUrl, 200);
   const gallery = Array.isArray(source.gallery)
-    ? source.gallery.map((item) => asText(item, 500)).filter((item) => item.startsWith("/")).slice(0, 16)
+    ? source.gallery.map((item) => asText(item, 500)).filter((item) => item.startsWith("/") || item.startsWith("http")).slice(0, 16)
     : [];
   const description = asText(source.description, 600);
   const currency = asText(source.currency, 6).toUpperCase() || "AMD";
@@ -114,7 +114,7 @@ export function validateProductInput(body: unknown):
   if (name.length < 2) return { ok: false, error: "Name is required." };
   if (category.length < 2) return { ok: false, error: "Category is required." };
   if (!Number.isFinite(price) || price < 0) return { ok: false, error: "Price must be valid." };
-  if (!image.startsWith("/")) return { ok: false, error: "Image must be a local /images or /uploads path." };
+  if (!image.startsWith("/") && !image.startsWith("http")) return { ok: false, error: "Image must be a valid URL or local path." };
   if (description.length < 5) return { ok: false, error: "Description is required." };
 
   return {
