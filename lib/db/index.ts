@@ -5,5 +5,5 @@ import { config } from "dotenv";
 
 config({ path: ".env.local" });
 
-const sql = neon(process.env.DATABASE_URL!);
+const sql = neon(process.env.DATABASE_URL || "postgres://dummy:dummy@dummy/dummy");
 export const db = drizzle(sql, { schema });
