@@ -10,7 +10,7 @@ export function LanguageSwitcher({ currentLang, invert = false }: { currentLang:
 
   const switchLang = (newLocale: string) => {
     const newPath = pathname.replace(`/${currentLang}`, `/${newLocale}`);
-    router.push(newPath);
+    router.push(newPath, { scroll: false });
   };
 
   return (
